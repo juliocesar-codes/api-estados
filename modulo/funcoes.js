@@ -10,7 +10,9 @@ const MESSAGE_ERROR = {status : false, statuscode: 500, development:'Julio Cesar
 
 // Retorna a lista de estados 
 const getAllEstados = function(){
+    // Padrão do JSON que será o retorno da função 
     let message = {status:true, statuscode:200, development: 'Julio Cesar', uf:[]}
+
     dados.listaDeEstados.estados.forEach(function(item){
         message.uf.push(item.sigla)
     })
@@ -26,18 +28,53 @@ const getAllEstados = function(){
 }
 
 // Retorna dados do estado filtrando pela sigla
-const getEstadoBySigla = function(sigla){
+const getEstadoBySigla = function(uf){
+    let message = {status:true, statuscode:200, development: 'Julio Cesar', uf: '', descricao:"", capital:"", regiao:""}
+
+    dados.listaDeEstados.estados.forEach(item=>{
+        if (item.sigla === uf) {
+            message.uf = item.sigla
+            message.descricao = item.nome
+            message.capital = item.capital
+            message.regiao = item.regiao
+        }
+    })
+    if(uf === message.uf)
+        return message
+    else return MESSAGE_ERROR
 
 }
 
 // Retorna a capital do estado filtrando pela sigla
-const getCapitalBySigla = function(sigla){
-    
+const getCapitalBySigla = function(uf){
+    let message = {status:true, statuscode:200, development: 'Julio Cesar', uf: "", descricao:"", capital:""}
+
+    dados.listaDeEstados.estados.forEach(item =>{
+        if(item.sigla === uf){
+            message.uf = item.sigla
+            message.descricao = item.nome
+            message.capital = item.capital
+        }
+    })
+    if (uf === message.uf) {
+        return message
+    }else return MESSAGE_ERROR
 }
 
 // Retorna a lista de estados filtrando pela regiao
 const getEstadoByRegiao = function(regiao){
+    let message = {status:true, statuscode:200, development: 'Julio Cesar', regiao: "", estados:[], uf:"", descricao:""}
 
+    dados.listaDeEstados.estados.forEach(item =>{
+        if (item.regiao === regiao) {
+            message.regiao = item.regiao
+            message.estados.push(item.estados)
+        }
+        
+    })
+    if (regiao === message.regiao) {
+        return message
+    }
 }
 
 // Retorna a lista de estados que formam a capital de um pais filtrando pelo pais
@@ -50,6 +87,11 @@ const getCidadesBySigla = function(sigla){
 
 }
 
+
 module.exports = {
-    getAllEstados
+    getAllEstados,
+    getEstadoBySigla,
+    getCapitalBySigla
 }
+
+console.log(getEstadoByRegiao('Norte'))
