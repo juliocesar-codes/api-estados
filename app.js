@@ -45,10 +45,45 @@ app.get('/v1/estados', function(request, response){
     response.json(estados)
 })
 
+
 app.get('/v1/estado/:uf', function(request, response){
     let sigla = request.params.uf
+    let estadosBySigla = dados.getEstadoBySigla(sigla)
 
-    console.log(sigla)
+    response.status(estadosBySigla.statuscode)
+    response.json(estadosBySigla)
+})
+
+app.get('/v1/capital/:uf', function(request,response){
+    let sigla = request.params.uf
+    let capitalBySigla = dados.getCapitalBySigla(sigla)
+
+    response.status(capitalBySigla.statuscode)
+    response.json(capitalBySigla)
+})
+
+app.get('/v1/regiao/estado/:regiao', function(request, response){
+    let regiao = request.params.regiao
+    let estadoByRegiao = dados.getEstadoByRegiao(regiao)
+
+    response.status(estadoByRegiao.statuscode)
+    response.json(estadoByRegiao)
+})
+
+app.get('/v1/capitais/:pais', function(request, response){
+    let pais = request.params.pais
+    let EstadoIsCapitalByCountry = dados.getEstadoIsCapitalByCountry(pais)
+
+    response.status(EstadoIsCapitalByCountry.statuscode)
+    response.json(EstadoIsCapitalByCountry)
+})
+
+app.get('/v1/cidades/:uf', function(request, response){
+    let sigla = request.params.uf
+    let cidadesBySigla = dados.getCidadesBySigla(sigla)
+
+    response.status(cidadesBySigla.statuscode)
+    response.json(cidadesBySigla)
 })
 
 app.get('/v1/regiao/estado/:id', function(request, response){

@@ -63,35 +63,85 @@ const getCapitalBySigla = function(uf){
 
 // Retorna a lista de estados filtrando pela regiao
 const getEstadoByRegiao = function(regiao){
-    let message = {status:true, statuscode:200, development: 'Julio Cesar', regiao: "", estados:[], uf:"", descricao:""}
+    let message = {status:true, statuscode:200, development: 'Julio Cesar', regiao: "", estados:[]}
 
     dados.listaDeEstados.estados.forEach(item =>{
         if (item.regiao === regiao) {
             message.regiao = item.regiao
-            message.estados.push(item.estados)
+            let estadosRegiao = {
+                'uf': item.nome,
+                'descricao':item.nome
+            }
+            message.estados.push(estadosRegiao)
         }
         
     })
     if (regiao === message.regiao) {
         return message
     }
+    else MESSAGE_ERROR
 }
 
 // Retorna a lista de estados que formam a capital de um pais filtrando pelo pais
-const getEstadoIsCapitalByCountry = function(pais){
+const getEstadoIsCapitalByCountry = function (pais) {
+    let paisMaiusculo = String(pais).toUpperCase()
+    let message = { status: true, statuscode: 200, development: 'Gustavo Pereira', capitais: [] }
 
+    if (dados.listaDeEstados.pais.toUpperCase() === paisMaiusculo) {
+        dados.listaDeEstados.estados.forEach(item => {
+            if (item.capital_pais) {
+                let estadosCapital = {
+                    'capital_atual': item.capital_pais.capital,
+                    'uf': item.sigla,
+                    'descricao': item.nome,
+                    'capital': item.capital,
+                    'regiao': item.regiao,
+                    'capital_pais_ano_inicio': item.capital_pais.ano_inicio,
+                    'capital_pais_ano_termino': item.capital_pais.ano_fim
+                }
+
+                message.capitais.push(estadosCapital)
+            }
+        }
+        )
+    }
+
+    if (message.capitais.length > 0) {
+        return message
+    } else
+        return MESSAGE_ERROR
 }
 
 // Retorna as cidades existente em um estado, filtrando pela sigla
-const getCidadesBySigla = function(sigla){
+const getCidadesBySigla = function (sigla) {
+    let siglaMaiuscula = String(sigla).toUpperCase()
+    let message = { status: true, statuscode: 200, development: 'Gustavo Pereira', uf: '', descricao: '', quantidade_cidades: '', cidades: [] }
 
+    dados.listaDeEstados.estados.forEach(item => {
+        if (item.sigla.toUpperCase() === siglaMaiuscula) {
+            message.uf = item.sigla
+            message.descricao = item.nome
+
+            item.cidades.forEach(cidade => {
+                message.cidades.push(cidade.nome)
+            })
+        }
+    })
+    message.quantidade_cidades = message.cidades.length
+
+    if (message.cidades.length > 0) {
+        return message
+    } else
+        return MESSAGE_ERROR
 }
 
 
 module.exports = {
     getAllEstados,
     getEstadoBySigla,
-    getCapitalBySigla
+    getCapitalBySigla,
+    getEstadoByRegiao,
+    getEstadoIsCapitalByCountry,
+    getCidadesBySigla
 }
 
-console.log(getEstadoByRegiao('Norte'))
