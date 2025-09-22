@@ -85,7 +85,7 @@ const getEstadoByRegiao = function(regiao){
 // Retorna a lista de estados que formam a capital de um pais filtrando pelo pais
 const getEstadoIsCapitalByCountry = function (pais) {
     let paisMaiusculo = String(pais).toUpperCase()
-    let message = { status: true, statuscode: 200, development: 'Gustavo Pereira', capitais: [] }
+    let message = { status: true, statuscode: 200, development: 'Julio Cesar', capitais: [] }
 
     if (dados.listaDeEstados.pais.toUpperCase() === paisMaiusculo) {
         dados.listaDeEstados.estados.forEach(item => {
@@ -115,7 +115,7 @@ const getEstadoIsCapitalByCountry = function (pais) {
 // Retorna as cidades existente em um estado, filtrando pela sigla
 const getCidadesBySigla = function (sigla) {
     let siglaMaiuscula = String(sigla).toUpperCase()
-    let message = { status: true, statuscode: 200, development: 'Gustavo Pereira', uf: '', descricao: '', quantidade_cidades: '', cidades: [] }
+    let message = { status: true, statuscode: 200, development: 'Julio Cesar', uf: '', descricao: '', quantidade_cidades: '', cidades: [] }
 
     dados.listaDeEstados.estados.forEach(item => {
         if (item.sigla.toUpperCase() === siglaMaiuscula) {
